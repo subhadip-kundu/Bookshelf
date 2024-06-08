@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { FaSearch, FaBookOpen } from "react-icons/fa";
@@ -10,14 +10,20 @@ function BookSearchPage() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [noResults, setNoResults] = useState(false);
+  const debounceTimeout = useRef(null);
 
-  const handleChange = (e) => {
-    const { value } = e.target;
-    setQuery(value);
-    if (value.trim() !== "") {
-      setLoading(true);
+  useEffect(() => {
+    if (query.trim() === "") {
+      setResults([]);
+      setNoResults(false);
+      return;
+    }
+
+    setLoading(true);
+
+    debounceTimeout.current = setTimeout(() => {
       axios
-        .get(`https://openlibrary.org/search.json?q=${value}&limit=10&page=1`)
+        .get(`https://openlibrary.org/search.json?q=${query}&limit=10&page=1`)
         .then((response) => {
           const books = response.data.docs;
           setResults(books);
@@ -28,16 +34,24 @@ function BookSearchPage() {
           console.error("Error fetching data:", error);
           setLoading(false);
         });
-    } else {
-      setResults([]);
-      setNoResults(false);
-    }
+    }, 1000);
+
+    return () => {
+      clearTimeout(debounceTimeout.current);
+    };
+  }, [query]);
+
+  const handleChange = (e) => {
+    setQuery(e.target.value);
   };
 
   const addToBookshelf = (book) => {
     const bookshelf = JSON.parse(localStorage.getItem("bookshelf")) || [];
-    bookshelf.push(book);
-    localStorage.setItem("bookshelf", JSON.stringify(bookshelf));
+    const bookExists = bookshelf.some((b) => b.key === book.key);
+    if (!bookExists) {
+      bookshelf.push(book);
+      localStorage.setItem("bookshelf", JSON.stringify(bookshelf));
+    }
   };
 
   return (
@@ -129,14 +143,13 @@ function BookSearchPage() {
                   </p>
                 </div>
                 <div className="w-full flex justify-center">
-                <button
-                  onClick={() => addToBookshelf(book)}
-                  className="mt-4 mx-auto px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-300"
-                >
-                  Add to Bookshelf
-                </button>
+                  <button
+                    onClick={() => addToBookshelf(book)}
+                    className="mt-4 mx-auto px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-300"
+                  >
+                    Add to Bookshelf
+                  </button>
                 </div>
-                
               </div>
             </motion.div>
           ))}
