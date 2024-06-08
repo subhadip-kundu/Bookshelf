@@ -10,18 +10,18 @@ This is a React application that allows users to search for books using the Open
 ## Installation
 
 1. Clone the repository:
-git clone https://github.com/subhadip-kundu/Bookshelf.git
+`git clone https://github.com/subhadip-kundu/Bookshelf.git`
 
 2. Navigate to the project directory:
-cd book-search-bookshelf
+`cd book-search-bookshelf`
 
 3. Install the dependencies:
-npm install
+`npm install`
 
 ## Usage
 
 1. Start the development server:
-npm run dev
+`npm run dev`
 
 3. Open your browser and navigate to `http://localhost:5173`.
 
