@@ -1,4 +1,3 @@
-// BookSearchPage.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -63,15 +62,18 @@ function BookSearchPage() {
         </Link>
       </div>
       {loading ? (
-        <div className="flex justify-center items-center h-64">
+        <div className="flex flex-col justify-center items-center h-64 space-y-4">
           <ClipLoader color="#3b82f6" size={50} />
+          <p className="text-blue-500 text-lg font-semibold animate-pulse">
+            Please wait while we fetch books named "{query}"
+          </p>
         </div>
       ) : noResults ? (
         <div className="text-center text-gray-500 mt-10">
           <p>No books found.</p>
         </div>
       ) : (
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -102,13 +104,19 @@ function BookSearchPage() {
                 />
               </Link>
               <div className="p-4">
-                <h2 className="text-lg font-semibold mb-2 text-gray-800">{book.title}</h2>
+                <h2 className="text-lg font-semibold mb-2 text-gray-800">
+                  {book.title}
+                </h2>
                 <p className="text-gray-600 mb-2">
                   {book.author_name && book.author_name.join(", ")}
                 </p>
                 <div className="text-sm text-gray-500">
-                  <p className="font-medium">Year: {book.first_publish_year || "Unknown"}</p>
-                  <p className="font-medium">Edition Count: {book.edition_count || "Unknown"}</p>
+                  <p className="font-medium">
+                    Year: {book.first_publish_year || "Unknown"}
+                  </p>
+                  <p className="font-medium">
+                    Edition Count: {book.edition_count || "Unknown"}
+                  </p>
                   <p className="font-medium">
                     Language:{" "}
                     {book.language ? book.language.slice(0, 1) : "Unk"}
