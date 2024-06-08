@@ -107,7 +107,7 @@ function BookSearchPage() {
                 <h2 className="text-lg font-semibold mb-2 text-gray-800">
                   {book.title}
                 </h2>
-                <p className="text-gray-600 mb-2">
+                <p className="text-red-500 italic mb-2">
                   {book.author_name && book.author_name.join(", ")}
                 </p>
                 <div className="text-sm text-gray-500">
@@ -128,12 +128,15 @@ function BookSearchPage() {
                       : "Not Rated"}
                   </p>
                 </div>
+                <div className="w-full flex justify-center">
                 <button
                   onClick={() => addToBookshelf(book)}
-                  className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-300"
+                  className="mt-4 mx-auto px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-300"
                 >
                   Add to Bookshelf
                 </button>
+                </div>
+                
               </div>
             </motion.div>
           ))}
