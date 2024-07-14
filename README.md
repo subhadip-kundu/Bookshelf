@@ -4,7 +4,7 @@ This is a React application that allows users to search for books using the Open
 
 - **Book Search**: Users can search for books by entering a query in the search input field. The application fetches book data from the OpenLibrary API and displays the results in a grid layout.
 - **Add to Bookshelf**: Users can add books to their personal bookshelf with a click of a button. The bookshelf data is stored in the browser's local storage.
-- **Remove from Bookshelf**: Users can remove books from their personal bookshelf by clicking a remove button next to each book.
+- **Remove from Bookshelf**: Users can remove books from their personal bookshelf by clicking a remove button next to each book.Also deleted from browser's local storage.
 - **Navigation**: Users can navigate between the book search page and the personal bookshelf page using links or buttons.
 
 ## Installation
